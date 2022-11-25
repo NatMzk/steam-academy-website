@@ -1,0 +1,17 @@
+<section id="projects" class="section section-violet projects-section">
+    <div class="container">
+      <h1> Aktualizuj dane o projekcie</h1>   
+  
+      <form class="form-inline" action="/projects/{{project.id}}/edit" method="post">
+        <div>
+          <input type="text" name="title" placeholder="Tytuł" value="{{project.title}}">
+          <input type="text" name="category" placeholder="Kategoria" value="{{project.category}}">
+          <input type="text" name="created_at" placeholder="Dara rozpoczęcia" value="{{project.created_at}}">
+          <input type="text" name="link" placeholder="Link" value="{{project.link}}">
+          <button type="submit" class="add-button">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>

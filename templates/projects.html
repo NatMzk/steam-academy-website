@@ -1,0 +1,62 @@
+<section id="projects" class="section section-violet projects-section">
+  <div class="container">
+    <h1> Moje projekty</h1>
+    <h3>{{ weather_mood }}</h3>
+    {% if user.is_authenticated %}
+    <form class="form" action="/projects" method="post">
+      <div>
+        <input type="text" name="title" placeholder="Tytuł">
+        <input type="text" name="category" placeholder="Kategoria">
+        <input type="text" name="link" placeholder="Link">
+        <button type="submit" class="add-button">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    </form>
+    {% endif %}
+
+    {% if not my_projects %}
+    <h3>Nie mam jeszcze żadnych projektów</h3>
+    {% else %}
+
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Tytuł</th>
+          <th scope="col">Kategoria</th>
+          <th scope="col">Rozpoczęto</th>
+          <th scope="col">Status</th>
+          <th scope="col">Link</th>
+          {% if user.is_authenticated %}
+          <th scope="col">Edycja</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in my_projects %}
+        <tr>
+          <td>{{ project.title }}</td>
+          <td>{{ project.category }}</td>
+          <td>{{ project.created_at.strftime('%Y-%m-%d') }}</td>
+          <td>{% if project.finished %} Ukończony {% else %} Nieukończony {% endif %}</td>
+          <td><a href="http://{{ project.link }}">{{ project.link }}</a></td>
+          {% if user.is_authenticated %}
+          <td>
+          <a href="/projects/{{project.id}}/change_status">
+            {% if project.finished %}
+            <i class="fa-solid fa-lock-open"></i>
+            {% else %}
+            <i class="fa-solid fa-lock"></i>
+            {% endif %}
+          </a>
+          | <a href="/projects/{{project.id}}/edit"><i class="fa-solid fa-pen-to-square"></i></a>
+          | <a href="/projects/{{project.id}}/delete"><i class="fa-solid fa-trash"></i></a>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  </div>
+</section>
